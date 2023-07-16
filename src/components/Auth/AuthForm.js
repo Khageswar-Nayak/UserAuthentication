@@ -1,11 +1,13 @@
 import { useState, useRef, useContext } from "react";
 import AuthContext from "../../Store/Global-context";
 import classes from "./AuthForm.module.css";
+import { useHistory } from "react-router-dom";
 
 const AuthForm = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const authCtx = useContext(AuthContext);
+  const history = useHistory();
   // console.log(globalCtx.tokenId);
   const emailRef = useRef("");
   const passwordRef = useRef("");
@@ -58,6 +60,7 @@ const AuthForm = () => {
       .then((data) => {
         // console.log(data.idToken);
         authCtx.login(data.idToken);
+        history.replace("/profile");
       })
       .catch((err) => {
         alert(err.message);
